@@ -4,4 +4,4 @@ Profesor: Christian Sarmiento
 Integrantes:
 Juan Pablo Tejo
 Benjamin Zuñiga
-*******
+Bastian Rodriguez
