@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+
+    <ion-buttons *ngIf="isNotHome == false" slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons *ngIf="isNotHome" slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-capitalize">{{pageTitle}}</ion-title>
+
+    <!--<ion-thumbnail slot="end" >
+      <img class="logo-header" src="******" alt="">   Poner una Imagen aca, no se te olvideee!!!!
+    </ion-thumbnail>-->
+
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/login']">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
