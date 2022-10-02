@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/mis-viajes/mis-viajes.module').then( m => m.MisViajesPageModule)
   },
   {
-    path: 'page404',
+    path: '404',
     loadChildren: () => import('./pages/page404/page404.module').then( m => m.Page404PageModule)
   },
   {
