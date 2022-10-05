@@ -1,5 +1,5 @@
-#TeLlevoAPP
-##Proyecto de Programacion de aplicaciones moviles PGY4121-004D
+# TeLlevoAPP
+## Proyecto de Programacion de aplicaciones moviles PGY4121-004D
 
 Profesor: Christian Sarmiento
 Integrantes:
