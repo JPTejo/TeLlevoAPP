@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-splash-screen',
@@ -7,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SplashScreenComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
+
+    //Close the modal
+    ionViewDidEnter(){
+      setTimeout(() => {
+        this.modalController.dismiss();
+      }, 2000);
+    }
 
 }
