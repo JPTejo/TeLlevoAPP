@@ -10,10 +10,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./pages/folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
     canActivate: [SesionGuard]
@@ -49,6 +45,16 @@ const routes: Routes = [
     canActivate: [SesionGuard]
   },
   {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule),
+    canActivate: [SesionGuard]
+  },
+  {
+    path: 'conversor',
+    loadChildren: () => import('./pages/conversor/conversor.module').then( m => m.ConversorPageModule),
+    canActivate: [SesionGuard]
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/page404/page404.module').then( m => m.Page404PageModule)
   },
@@ -56,6 +62,8 @@ const routes: Routes = [
     path: '**',
     redirectTo: '404'
   },
+
+
 ];
 
 @NgModule({

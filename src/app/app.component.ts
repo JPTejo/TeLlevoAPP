@@ -10,10 +10,12 @@ import { SplashScreenComponent } from './components/splash-screen/splash-screen.
 export class AppComponent {
   public appPages = [
     { title: 'Buscar Viaje', redirectTo: '/home', icon: 'paper-plane'},
-    { title: 'Mis Viajes', redirectTo: '/mis-viajes', icon: 'archive' },
+    { title: 'Mis Viajes', redirectTo: '/mis-viajes', icon: 'analytics' },
     { title: 'Favoritos', redirectTo: '/favoritos', icon: 'heart' },
-    { title: 'Amigos', redirectTo: '/amigos', icon: 'warning' },
-    { title: 'Contacto', redirectTo: '/contacto', icon: 'mail' },
+    { title: 'Amigos', redirectTo: '/amigos', icon: 'person' },
+    { title: 'Contacto', redirectTo: '/contacto', icon: 'call' },
+    { title: 'Conversor', redirectTo: '/conversor', icon: 'cash' },
+    { title: 'About', redirectTo: '/about', icon: 'people' },
   ];
   /** public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']; **/
   constructor(private modalController: ModalController) {

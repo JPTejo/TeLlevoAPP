@@ -11,20 +11,10 @@ export class HomePage {
   pageTitle = 'TeLlevo';
   isNotHome = false;
 
-  constructor(private alertController:AlertController) {}
+  constructor() {}
 
 
   ngOnInit() {
-    this.presentAlert();
   }
 
-  async presentAlert(){
-    const alert = await this.alertController.create({
-      header: 'Bienvenido',
-      message: 'Has accedido correctamente!',
-      buttons: ['Entrar']
-    });
-
-    await alert.present();
-  }
 }
