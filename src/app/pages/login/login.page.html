@@ -1,8 +1,15 @@
-<app-header [pageTitle]="pageTitle" [isNotHome]="isNotHome"></app-header>
+<ion-header>
+    <ion-toolbar color="secondary">
+      <ion-title class="ion-text-capitalize">{{pageTitle}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
     
     <ion-card>
+        <ion-card-title color="primary" class="ion-text-center">
+            Accede a la Aplicación!
+        </ion-card-title>
         <ion-card-content>
             <form [formGroup]="formularioLogin">
                 <ion-item>
