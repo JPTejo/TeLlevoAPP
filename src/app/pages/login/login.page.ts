@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -10,46 +9,66 @@ import { ToastController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  pageTitle='login';
-  isNotHome= true;
-  //Modelo
-  user : any = {
-    email:'',
-    password:''
+  pageTitle = 'Login';
+  isNotHome = true;
+
+  formularioLogin: FormGroup;
+
+  listaUsuarios : any = [
+    {
+      user: 'ADMIN',
+      password: 'ADMIN',
+    },
+    {
+      user: 'USER',
+      password: 'USER',
+    },
+  ];
+
+  jsonobjs : JSON;
+
+  constructor(private formBuilder: FormBuilder,
+    private alertController: AlertController,
+    private navController: NavController) { 
+
+    this.formularioLogin = this.formBuilder.group({
+      'user': new FormControl("", Validators.required),
+      'password': new FormControl("", Validators.required)
+    });
+
   }
-
-  field : string = '';
-
-  constructor(private toastCtrl: ToastController, private router:Router) { }
 
   ngOnInit() {
   }
 
-  login(){
-    if(this.validarModelo(this.user)){
-      this.presentToast('Bienvenido ' + this.user.email);
-      this.router.navigate(['/']);
-    }
-    this.presentToast('Debes ingresar: ' + this.field)
-  }
+   async login() {
 
-  validarModelo(model:any){
-    for(var[key,value] of Object.entries(model)){
-      if(value == ''){
-        this.field = key;
-        return false;
-      }
-    }
-    return true;
-  }
-
-  async presentToast(message:string, duration?:number) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: duration?duration:2000,
-      position: 'bottom'
+    var ingreso = this.formularioLogin.value;
+    var validado = false;
+    
+    this.listaUsuarios.forEach(element => {
+      if (element.user == ingreso.user && element.password == ingreso.password){
+        validado = true;
+        console.log('Validado');
+      };
     });
-    await toast.present();
+
+    if (validado) {
+      console.log('Ingresado');
+      localStorage.setItem('ingresado', 'true');
+      localStorage.setItem('ingreso', ingreso.user);
+      this.navController.navigateRoot('home');
+    }
+    else{
+      const alert = await this.alertController.create({
+        header: 'Datos Incorrectos',
+        message: 'Los datos que ingresaste son incorrectos',
+        buttons: ['Aceptar']
+      });
+
+      await alert.present();
+    }
+
   }
 
 }
