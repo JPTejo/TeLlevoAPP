@@ -7,3 +7,7 @@ Integrantes:
 - Juan Pablo Tejo
 - Benjamin Zuñiga
 - Bastián Rodríguez
+
+
+Usuario:                       Clave:
+loid.forger@hotmail.com        123456

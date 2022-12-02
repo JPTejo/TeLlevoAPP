@@ -1,12 +1,32 @@
 <ion-header>
     <ion-toolbar color="secondary">
       <ion-title class="ion-text-capitalize">{{pageTitle}}</ion-title>
+      <ion-card-title style="color: white;" class="ion-text-center">
+        Accede a la Aplicación!
+    </ion-card-title>
     </ion-toolbar>
   </ion-header>
 
 <ion-content>
+
+    <form (ngSubmit)="login()" [formGroup]="credentials">
+
+        <ion-item class="ion-margin-bottom">
+          <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+          <ion-note slot="error" *ngIf="(email?.dirty || email?.touched) && email?.errors">Formato email no válido.</ion-note>
+        </ion-item>
     
-    <ion-card>
+        <ion-item class="ion-margin-bottom">
+          <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+          <ion-note slot="error" *ngIf="(password?.dirty || password?.touched) && password?.errors">El password debe contener al menos 6 caracteres.</ion-note>
+        </ion-item>
+        
+        <ion-button expand="full" type="submit" [disabled]="!credentials.valid">Login</ion-button>
+        <ion-button expand="full" type="button" (click)="register()">Crear cuenta</ion-button>
+    
+      </form>
+    
+  <!--  <ion-card>
         <ion-card-title color="primary" class="ion-text-center">
             Accede a la Aplicación!
         </ion-card-title>
@@ -23,5 +43,5 @@
             </form>
             <ion-button shape="block" (click)="login()">Ingresar</ion-button>
         </ion-card-content>
-    </ion-card>
+    </ion-card>-->
 </ion-content>
