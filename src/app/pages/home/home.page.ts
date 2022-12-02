@@ -75,22 +75,22 @@ export class HomePage {
         {
           name:'name',
           type:'text',
-          placeholder:'Name'
+          placeholder:'Nombre'
         },
         {
           name:'lastname',
           type:'text',
-          placeholder:'Lastname'
+          placeholder:'Apellido'
         },
         {
           name:'gender',
           type:'text',
-          placeholder:'Gender'
+          placeholder:'Genero'
         },
         {
           name:'age',
           type:'number',
-          placeholder:'Age'
+          placeholder:'Edad'
         },
         {
           name:'email',
@@ -113,7 +113,7 @@ export class HomePage {
           role:'confirm',
           handler:(data) => {
             this.usuarioService.addUsuario(data);
-            this.toastPresent('User added!!!');
+            this.toastPresent('Usuario agregado!!!');
           }
         }
       ]

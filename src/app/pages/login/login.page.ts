@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,66 +11,70 @@ import { AlertController, NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  pageTitle = 'Login';
-  isNotHome = true;
+  credentials!: FormGroup;
 
-  formularioLogin: FormGroup;
-
-  listaUsuarios : any = [
-    {
-      user: 'ADMIN',
-      password: 'ADMIN',
-    },
-    {
-      user: 'USER',
-      password: 'USER',
-    },
-  ];
-
-  jsonobjs : JSON;
-
-  constructor(private formBuilder: FormBuilder,
-    private alertController: AlertController,
-    private navController: NavController) { 
-
-    this.formularioLogin = this.formBuilder.group({
-      'user': new FormControl("", Validators.required),
-      'password': new FormControl("", Validators.required)
-    });
-
-  }
+  constructor(
+    private formBuilder:FormBuilder,
+    private auth:AuthService,
+    private alertCtrl: AlertController,
+    private loadingCtrl:LoadingController,
+    private router:Router
+  ) { }
 
   ngOnInit() {
+    this.createForm();
   }
 
-   async login() {
+  get email(){
+    return this.credentials?.get('email');
+  }
 
-    var ingreso = this.formularioLogin.value;
-    var validado = false;
-    
-    this.listaUsuarios.forEach(element => {
-      if (element.user == ingreso.user && element.password == ingreso.password){
-        validado = true;
-        console.log('Validado');
-      };
+  get password(){
+    return this.credentials?.get('password');
+  }
+
+  createForm(){
+    this.credentials = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
 
-    if (validado) {
-      console.log('Ingresado');
-      localStorage.setItem('ingresado', 'true');
-      localStorage.setItem('ingreso', ingreso.user);
-      this.navController.navigateRoot('home');
+  async login(){
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    const user = await this.auth.login(this.credentials.value.email,this.credentials.value.password);
+    await loading.dismiss();
+
+    if(user){
+      this.router.navigateByUrl('/home',{replaceUrl:true});
     }
     else{
-      const alert = await this.alertController.create({
-        header: 'Datos Incorrectos',
-        message: 'Los datos que ingresaste son incorrectos',
-        buttons: ['Aceptar']
-      });
-
-      await alert.present();
+      this.alertPresent('Ingreso Fallido','Por favor, intente otra vez!!');
     }
-
   }
 
+  async register(){
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    const user = await this.auth.register(this.credentials.value.email,this.credentials.value.password);
+    await loading.dismiss();
+
+    if(user){
+      this.router.navigateByUrl('/home',{replaceUrl:true});
+    }
+    else{
+      this.alertPresent('Registro Fallido','Por favor, intente otra vez!!');
+    }
+  }
+
+  async alertPresent(header:string,message:string){
+    const alert = await this.alertCtrl.create({
+      header:header,
+      message:message,
+      buttons:['OK'],
+    });
+    await alert.present();
+  }
+  
 }

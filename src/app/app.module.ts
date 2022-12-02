@@ -10,12 +10,29 @@ import { environment } from 'src/environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { Capacitor } from '@capacitor/core';
+import { initializeAuth, indexedDBLocalPersistence } from 'firebase/auth';
+import { getApp } from 'firebase/app';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),],
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
+    provideAuth(() => {
+      if(Capacitor.isNativePlatform()){
+        return initializeAuth(getApp(),{
+          persistence: indexedDBLocalPersistence,
+        });
+      }
+      else{
+        return getAuth();
+      }
+    }),
+  ],
   providers: [ Geolocation, { provide: RouteReuseStrategy,  useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
