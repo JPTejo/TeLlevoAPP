@@ -2,14 +2,54 @@
 
 <ion-content>
   <ion-card color="danger">
-    <ion-card-header>
-      <ion-card-subtitle>Lo sentimos...</ion-card-subtitle>
-      <ion-card-title>Sitio en construcción</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content>
-      Esperamos tener este contenido disponible a la brevedad! :D
-    </ion-card-content>
+
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Moneda de Entrada</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-select
+          interface="action-sheet"
+          placeholder="Elige la moneda de entrada"
+          (ionChange)="inCurrency($event)"
+        >
+          <ion-select-option *ngFor="let currency of currencyList | keyvalue" [value]="currency.key">{{ currency.key }} {{currency.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+
+        <ion-label>Valor a Convertir</ion-label>
+        <ion-input type="number" inputmode="decimal" placeholder="0" value="0" [(ngModel)]="inputValue" (keypress)="numberOnlyValidation($event)"></ion-input>
+      </ion-item>
+      <ion-item></ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label>Moneda de salida</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-select
+          interface="action-sheet"
+          placeholder="Elige la moneda de salida"
+          (ionChange)="outCurrency($event)"
+        >
+          <ion-select-option *ngFor="let currency of currencyList | keyvalue" [value]="currency.key">{{ currency.key }} {{currency.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Conversión a {{ currentCurrencyOut }}</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label> {{ result }} {{ currentCurrencyOut }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
   </ion-card>
+
 </ion-content>
