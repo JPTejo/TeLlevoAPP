@@ -5,16 +5,36 @@
       <ion-back-button defaultHref="/" color="light"></ion-back-button>
     </ion-buttons>
 
-    <ion-title class="ion-text-capitalize">{{pageTitle}}</ion-title>
+    <ion-title class="ion-text-capitalize" style="position: center ;">Perfil Usuario</ion-title>
+
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="avatar">
+    <ion-avatar (click)="uploadAvatar()">
+      <img *ngIf="profile?.imageUrl; else placeholder_avatar;" [src]="profile.imageUrl" />
+      <ng-template #placeholder_avatar>
+        <div class="no-avatar">
+          <p>Subir imagen</p>
+        </div>
+      </ng-template>
+    </ion-avatar>
+  </div>
+</ion-content>
 
+
+
+<ion-content>
   <ion-card>
     <ion-card-content>
+      <p>{{usuario?.email}}</p>
       <ion-button color="danger"  shape="block" (click)="logout()">Cerrar Sesión</ion-button>
+      <ion-button expand="block" color="danger" (click)="deleteUsuario()">
+        <ion-icon name="trash" slot="start">Borrar usuario</ion-icon>
+      </ion-button>
     </ion-card-content>
   </ion-card>
+  
 </ion-content>

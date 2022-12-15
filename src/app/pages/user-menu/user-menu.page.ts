@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { AvatarService } from 'src/app/services/avatar.service';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType, CameraSource } from '@capacitor/camera/dist/esm/definitions';
+import { Usuario } from 'src/app/services/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { ModalPage } from '../modal/modal.page';
+
+
+import { Auth } from '@angular/fire/auth';
+import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-user-menu',
@@ -18,18 +24,34 @@ export class UserMenuPage implements OnInit {
   isNotHome = true;
 
   profile:any=null;
+  user:any;
+  id: string;
+
+  usuario: Usuario = null;
+
 
   constructor(
-    private navController:NavController,
     private router:Router,
     private authService:AuthService,
     private avatarService: AvatarService,
     private alertCtrl:AlertController,
     private toastCtrl:ToastController,
     private loadingCtrl: LoadingController, 
+    private usuarioService: UsuarioService,
+    private modalCtrl:ModalController, 
+    private auth: Auth,
+    private firestore: Firestore,
     ) { this.loadProfile(); }
 
   ngOnInit() {
+    this.getUsuario();
+  
+  }
+
+  getUsuario(){
+    this.usuarioService.getUsuarioById(this.id).subscribe(respuesta => {
+      this.usuario = respuesta;
+    });
   }
 
   async logout(){
@@ -37,11 +59,37 @@ export class UserMenuPage implements OnInit {
     this.router.navigateByUrl('/',{replaceUrl:true})
   } 
 
+
   loadProfile(){
     this.avatarService.getUserProfile().subscribe(respuesta => {
       this.profile = respuesta;
     })
   }
+  
+  async deleteUsuario(){    
+    const alert = await this.alertCtrl.create({
+      header:'Delete',
+      message: 'Estas seguro que deseas eliminar al usuario?',
+      buttons: [
+        {
+          text:'Cancel',
+          role:'cancel'
+        },
+        {
+          text:'Yes',
+          role:'confirm',
+          handler: () => {
+            this.usuarioService.deleteUsuario(this.usuario);
+            this.modalCtrl.dismiss();
+            this.toastPresent('User deleted!!!');
+          }
+        }
+       ]
+    });
+    alert.present();
+  }
+
+  
 
   async uploadAvatar(){
     const avatar = await Camera.getPhoto({
@@ -82,6 +130,17 @@ export class UserMenuPage implements OnInit {
       buttons:['OK'],
     });
     await alert.present();
+  }
+
+  
+  async openDetailUsuario(usuario:Usuario){
+    const modal = await this.modalCtrl.create({
+      component: ModalPage,
+      componentProps: { id:usuario.id },
+      breakpoints: [0,0.5,0.8,1],
+      initialBreakpoint:1
+    });
+    modal.present();
   }
 
 }

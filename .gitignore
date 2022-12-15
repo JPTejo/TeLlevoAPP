@@ -31,3 +31,7 @@ npm-debug.log*
 /plugins
 /www
 /e2e
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

@@ -7,28 +7,28 @@
 <ion-content>
   <div *ngIf="usuario">
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
+      <ion-label position="floating">Nombre</ion-label>
       <ion-input required type="text" [(ngModel)]="usuario.name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">lastname</ion-label>
+      <ion-label position="floating">Apellido</ion-label>
       <ion-input required type="text" [(ngModel)]="usuario.lastname"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Gender</ion-label>
+      <ion-label position="floating">Genero</ion-label>
       <ion-input required type="text" [(ngModel)]="usuario.gender"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Age</ion-label>
+      <ion-label position="floating">Edad</ion-label>
       <ion-input required type="number" [(ngModel)]="usuario.age"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Email</ion-label>
+      <ion-label position="floating">Correo</ion-label>
       <ion-input required type="email" [(ngModel)]="usuario.email"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Image</ion-label>
-      <ion-input required type="url" [(ngModel)]="usuario.image"></ion-input>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input required type="password" [(ngModel)]="usuario.contrasena"></ion-input>
     </ion-item>
   </div>
 

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { Usuario } from 'src/app/services/usuario';
+
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ export class LoginPage implements OnInit {
     private auth:AuthService,
     private alertCtrl: AlertController,
     private loadingCtrl:LoadingController,
-    private router:Router
+    private router:Router,
   ) { }
 
   ngOnInit() {
@@ -61,12 +63,15 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
+      this.alertPresent('Usuario Creado!','Por favor presione "ok" parar continuar y rellene sus datos de su perfil a su conveniencia.');
       this.router.navigateByUrl('/home',{replaceUrl:true});
     }
     else{
       this.alertPresent('Registro Fallido','Por favor, intente otra vez!!');
     }
   }
+
+
 
   async alertPresent(header:string,message:string){
     const alert = await this.alertCtrl.create({
@@ -76,5 +81,5 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   }
-  
+
 }
