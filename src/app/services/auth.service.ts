@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { doc, docData, Firestore, setDoc, addDoc, collection } from '@angular/fire/firestore';
 import { Storage} from '@angular/fire/storage';
+import { Usuario } from './usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class AuthService {
     const userDocRef = doc(this.firestore, `usuarios/${user?.uid}`);
     return docData(userDocRef);
   }
+
+
+
 
   async register(email:string,password:string){
     try {

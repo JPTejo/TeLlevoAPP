@@ -12,11 +12,21 @@ export class UsuarioService {
   constructor(private firestore:Firestore,
     private auth:Auth) { }
 
+  getUsuarios():Observable<Usuario[]>{
+      const usuariosRef = collection(this.firestore,'usuarios');
+      return collectionData(usuariosRef, {idField: 'id'}) as Observable<Usuario[]>;
+    }
+
 
   getUsuarioById(id:string): Observable<Usuario>{
     const user = this.auth.currentUser;
     const userDocRef = doc(this.firestore, `usuarios/${user?.uid}`);
     return docData(userDocRef, {idField:'id'}) as Observable<Usuario>;
+  }
+
+  selectUsuario(id:string): Observable<Usuario>{
+    const usuarioRef = doc(this.firestore,`usuarios/${id}`);
+    return docData(usuarioRef, {idField:'id'}) as Observable<Usuario>;
   }
 
 
@@ -34,7 +44,10 @@ export class UsuarioService {
   addUsuario(usuario:Usuario){
     const usuariosRef = collection(this.firestore,'usuarios');
     return addDoc(usuariosRef, usuario);
+    
+    
   }
+
 
   deleteUsuario(usuario:Usuario){
     const user = this.auth.currentUser;

@@ -5,5 +5,6 @@ export interface Usuario{
     genero:string;
     edad:number;
     email:string;
+    password:string;
     image:string;
 }

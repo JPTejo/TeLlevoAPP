@@ -21,40 +21,11 @@ export class ModalPage implements OnInit {
   }
 
   getUsuario(){
-    this.usuarioService.getUsuarioById(this.id).subscribe(respuesta => {
+    this.usuarioService.selectUsuario(this.id).subscribe(respuesta => {
       this.usuario = respuesta;
     });
   }
-
-  updateUsuario(){
-    this.usuarioService.updateUsuario(this.usuario);
-    this.modalCtrl.dismiss();
-    this.toastPresent('Usario Actualizado!!!!');
-  }
-
-  async deleteUsuario(){    
-    const alert = await this.alertCtrl.create({
-      header:'Delete',
-      message: 'Estas seguro que deseas eliminar al usuario?',
-      buttons: [
-        {
-          text:'Cancel',
-          role:'cancel'
-        },
-        {
-          text:'Yes',
-          role:'confirm',
-          handler: () => {
-            this.usuarioService.deleteUsuario(this.usuario);
-            this.modalCtrl.dismiss();
-            this.toastPresent('Usario Borrado!!!');
-          }
-        }
-       ]
-    });
-    alert.present();
-  }
-
+  
   async toastPresent(message:string){
     const toast = await this.toastCtrl.create({
       message:message,

@@ -55,9 +55,10 @@ export class HomePage {
     this.weatherTemp = results['current']
     this.cityName = results['timezone']
     console.log(this.weatherTemp);
-    this.weatherDetails = results['weather'][0]
+    this.weatherDetails = results['current']['weather'][0]['icon']
     console.log(this.weatherDetails);
-    this.weatherIcon = `http://openweathermap.org/img/wn/${this.weatherDetails.icon}.png`
+    this.weatherIcon = `http://openweathermap.org/img/wn/${this.weatherDetails}@2x.png`
+
     })
   }
 

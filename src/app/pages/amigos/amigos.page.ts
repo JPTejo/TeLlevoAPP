@@ -10,11 +10,20 @@ import { ModalPage } from '../modal/modal.page';
   styleUrls: ['./amigos.page.scss'],
 })
 export class AmigosPage implements OnInit {
-  ngOnInit() {
+  ngOnInit() {this.getUsuarios()
   }
-
+  usuarios: Usuario[] = [];
   pageTitle = 'amigos';
   isNotHome = true;
+  altAvatar = "https://static.thenounproject.com/png/193752-200.png"
+
+  getUsuarios(){
+    this.usuarioService.getUsuarios().subscribe(respuesta => {
+      console.log(respuesta);
+      this.usuarios = respuesta;
+    })
+  }
+
 
   constructor(private usuarioService: UsuarioService, private alertCtrl:AlertController,
     private toastCtrl: ToastController, private modalCtrl:ModalController) { }
@@ -24,7 +33,7 @@ export class AmigosPage implements OnInit {
         component: ModalPage,
         componentProps: { id:usuario.id },
         breakpoints: [0,0.5,0.8,1],
-        initialBreakpoint:1
+        initialBreakpoint:0.5
       });
       modal.present();
     }

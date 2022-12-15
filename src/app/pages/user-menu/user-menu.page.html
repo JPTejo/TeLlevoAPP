@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
   <div class="avatar">
     <ion-avatar (click)="uploadAvatar()">
       <img *ngIf="profile?.imageUrl; else placeholder_avatar;" [src]="profile.imageUrl" />
@@ -44,7 +44,6 @@
     </ion-item>
   </div>
 
-<ion-content>
   <ion-card>
     <ion-card-content>
       <ion-button expand="block" color="success" (click)="updateUsuario()">
