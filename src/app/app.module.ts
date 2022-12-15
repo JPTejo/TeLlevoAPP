@@ -15,10 +15,22 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { Capacitor } from '@capacitor/core';
 import { initializeAuth, indexedDBLocalPersistence } from 'firebase/auth';
 import { getApp } from 'firebase/app';
+import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { provideMessaging,getMessaging } from '@angular/fire/messaging';
+import { providePerformance,getPerformance } from '@angular/fire/performance';
+import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
+import { AuthGuard } from '@angular/fire/auth-guard';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+
+
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
@@ -32,8 +44,21 @@ import { getApp } from 'firebase/app';
         return getAuth();
       }
     }),
+    provideAnalytics(() => getAnalytics()),
+    provideDatabase(() => getDatabase()),
+    provideFunctions(() => getFunctions()),
+    provideMessaging(() => getMessaging()),
+    providePerformance(() => getPerformance()),
+    provideRemoteConfig(() => getRemoteConfig()),
   ],
-  providers: [ Geolocation, { provide: RouteReuseStrategy,  useClass: IonicRouteStrategy }],
+  providers: [
+     Geolocation,
+    { provide: RouteReuseStrategy,  useClass: IonicRouteStrategy },
+    ScreenTrackingService,
+    UserTrackingService,
+    AuthGuard,
+    AuthService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

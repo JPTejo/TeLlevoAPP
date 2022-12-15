@@ -29,7 +29,7 @@ export class ModalPage implements OnInit {
   updateUsuario(){
     this.usuarioService.updateUsuario(this.usuario);
     this.modalCtrl.dismiss();
-    this.toastPresent('User updated!!!!');
+    this.toastPresent('Usario Actualizado!!!!');
   }
 
   async deleteUsuario(){    
@@ -47,7 +47,7 @@ export class ModalPage implements OnInit {
           handler: () => {
             this.usuarioService.deleteUsuario(this.usuario);
             this.modalCtrl.dismiss();
-            this.toastPresent('User deleted!!!');
+            this.toastPresent('Usario Borrado!!!');
           }
         }
        ]

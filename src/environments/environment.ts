@@ -8,13 +8,14 @@ export const environment = {
   openWeather_URL: "https://api.openweathermap.org/data/3.0",
   currencyData_KEY: "u4YiZV171NsczguZ71fSmtMigqQK5iNo",
   currencyData_URL: "https://api.apilayer.com/currency_data",
-  firebase : {
-    apiKey: "AIzaSyB6P5IhCT6fM0a2Qg8ofk4OqZtB4d6bQwY",
-    authDomain: "tellevoapp-b2af6.firebaseapp.com",
-    projectId: "tellevoapp-b2af6",
-    storageBucket: "tellevoapp-b2af6.appspot.com",
-    messagingSenderId: "60202765654",
-    appId: "1:60202765654:web:14ecf882d33de0d7d59af7"
+  firebase: {
+    projectId: 'tellevoapp-b2af6',
+    appId: '1:60202765654:web:14ecf882d33de0d7d59af7',
+    storageBucket: 'tellevoapp-b2af6.appspot.com',
+    locationId: 'us-central',
+    apiKey: 'AIzaSyB6P5IhCT6fM0a2Qg8ofk4OqZtB4d6bQwY',
+    authDomain: 'tellevoapp-b2af6.firebaseapp.com',
+    messagingSenderId: '60202765654',
   },
 };
 
