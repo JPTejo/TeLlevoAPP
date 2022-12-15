@@ -36,7 +36,7 @@ export class HomePage {
     private modalCtrl:ModalController,
     private geolocation: Geolocation
     ) {
-    this.getUsuarios(); this.loadData();
+    this.loadData();
   }
 
 
@@ -59,66 +59,6 @@ export class HomePage {
     console.log(this.weatherDetails);
     this.weatherIcon = `http://openweathermap.org/img/wn/${this.weatherDetails.icon}.png`
     })
-  }
-
-  getUsuarios(){
-    this.usuarioService.getUsuarios().subscribe(respuesta => {
-      console.log(respuesta);
-      this.usuarios = respuesta;
-    })
-  }
-
-  async addUsuario(){
-    const alert = await this.alertCtrl.create({
-      header:'Add User',
-      inputs: [
-        {
-          name:'name',
-          type:'text',
-          placeholder:'Nombre'
-        },
-        {
-          name:'lastname',
-          type:'text',
-          placeholder:'Apellido'
-        },
-        {
-          name:'gender',
-          type:'text',
-          placeholder:'Genero'
-        },
-        {
-          name:'age',
-          type:'number',
-          placeholder:'Edad'
-        },
-        {
-          name:'email',
-          type:'email',
-          placeholder:'correo@correo.com'
-        },
-        {
-          name:'image',
-          type:'url',
-          placeholder:'link image'
-        },
-      ],
-      buttons: [
-        {
-          text:'Cancel',
-          role:'cancel'
-        },
-        {
-          text:'Save',
-          role:'confirm',
-          handler:(data) => {
-            this.usuarioService.addUsuario(data);
-            this.toastPresent('Usuario agregado!!!');
-          }
-        }
-      ]
-    });
-    alert.present();
   }
 
   async openDetailUsuario(usuario:Usuario){

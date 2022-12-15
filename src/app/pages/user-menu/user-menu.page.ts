@@ -11,7 +11,7 @@ import { ModalPage } from '../modal/modal.page';
 
 
 import { Auth } from '@angular/fire/auth';
-import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-user-menu',
@@ -26,8 +26,7 @@ export class UserMenuPage implements OnInit {
   profile:any=null;
   user:any;
   id: string;
-
-  usuario: Usuario = null;
+  usuario:any;
 
 
   constructor(
@@ -41,15 +40,17 @@ export class UserMenuPage implements OnInit {
     private modalCtrl:ModalController, 
     private auth: Auth,
     private firestore: Firestore,
-    ) { this.loadProfile(); }
+    ) { }
 
   ngOnInit() {
     this.getUsuario();
+    this.loadProfile(); 
   
   }
 
   getUsuario(){
-    this.usuarioService.getUsuarioById(this.id).subscribe(respuesta => {
+      this.usuarioService.getUsuarioById(this.id).subscribe(respuesta => {
+      console.log(respuesta);
       this.usuario = respuesta;
     });
   }
@@ -82,11 +83,18 @@ export class UserMenuPage implements OnInit {
             this.usuarioService.deleteUsuario(this.usuario);
             this.modalCtrl.dismiss();
             this.toastPresent('User deleted!!!');
+            this.authService.logout();
+            this.router.navigateByUrl('/',{replaceUrl:true})
           }
         }
        ]
     });
     alert.present();
+  }
+
+  updateUsuario(){
+    this.usuarioService.updateUsuario(this.usuario);
+    this.toastPresent('User updated!!!!');
   }
 
   
