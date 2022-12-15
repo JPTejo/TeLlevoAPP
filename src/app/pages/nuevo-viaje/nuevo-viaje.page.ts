@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NuevoViajePage implements OnInit {
 
+  pageTitle = 'Nuevo Viaje';
+  isNotHome = true;
+  
   constructor() { }
 
   ngOnInit() {
