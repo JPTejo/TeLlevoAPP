@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
     <ion-title>
       Listado Usuarios
     </ion-title>
@@ -10,26 +13,16 @@
   <ion-list>
     <ion-item *ngFor="let usuario of usuarios" (click)="openDetailUsuario(usuario)" >
       <ion-avatar slot="start">
-        <img [src]="usuario.image" alt="">
+        <img *ngIf="usuario?.imageUrl; else altAvatar" [src]="usuario.imageUrl">
+        <ng-template #altAvatar>
+          <div class="no-avatar">
+            <img src="https://static.thenounproject.com/png/193752-200.png" alt="">
+          </div>
+        </ng-template>
       </ion-avatar>
-      <ion-content [fullscreen]="true">
-        <ion-list>
-          <ion-item *ngFor="let usuario of usuarios" (click)="openDetailUsuario(usuario)" >
-            <ion-avatar slot="start">
-              <img [src]="usuario.image" alt="">
-            </ion-avatar>
-            <ion-label>
-              <h3>{{usuario.name}} {{usuario.lastname}}</h3>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        </ion-content>
+      <ion-label>
+        <h3>{{usuario.nombre}} {{usuario.apellido}}</h3>
+      </ion-label>
     </ion-item>
   </ion-list>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="success" (click)="addUsuario()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>
