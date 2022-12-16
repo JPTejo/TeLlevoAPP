@@ -27,6 +27,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+
 
 
 @NgModule({
@@ -38,6 +41,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+
 
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -67,6 +71,8 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     UserTrackingService,
     AuthGuard,
     AuthService,
+    EmailComposer,
+    
   ],
   bootstrap: [AppComponent],
 })

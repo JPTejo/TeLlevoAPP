@@ -3,12 +3,25 @@
 <ion-content>
     <ion-card color="danger">
       <ion-card-header>
-        <ion-card-subtitle>Lo sentimos...</ion-card-subtitle>
-        <ion-card-title>Sitio en construcción</ion-card-title>
+        <ion-card-title>Contactenos</ion-card-title>
       </ion-card-header>
     
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()">
       <ion-card-content>
-        Esperamos tener este contenido disponible a la brevedad! :D
+        <ion-item>
+          <ion-label>Nombre:</ion-label>
+          <ion-input formControlname="nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Email:</ion-label>
+          <ion-input formControlname="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mensaje:</ion-label>
+          <ion-input formControlname="mensaje"></ion-input>
+        </ion-item>
+        <ion-button type="submit" expand="block">Enviar</ion-button>
+      </form>
       </ion-card-content>
     </ion-card>
-  </ion-content>
+</ion-content>

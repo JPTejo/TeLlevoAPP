@@ -73,11 +73,14 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
+    path: 'nuevo-viaje',
+    loadChildren: () => import('./pages/nuevo-viaje/nuevo-viaje.module').then( m => m.NuevoViajePageModule)
   },
   {
     path: '**',
     redirectTo: '404'
   },
+
 ];
 
 @NgModule({
