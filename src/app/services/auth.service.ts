@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, deleteUser} from '@angular/fire/auth';
 import { doc, docData, Firestore, setDoc, addDoc, collection } from '@angular/fire/firestore';
-import { Storage} from '@angular/fire/storage';
-import { Usuario } from './usuario';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class AuthService {
 
   constructor(private auth:Auth,
     private firestore:Firestore,
-    private storage:Storage) { }
+    private storage:StorageService,
+    private fireAuth: AngularFireAuth,
+    private adb: AngularFirestore) { }
 
   getUserProfile(){
     const user = this.auth.currentUser;
@@ -19,25 +22,39 @@ export class AuthService {
     return docData(userDocRef);
   }
 
+  async getId(){
+    return (await this.storage.getStorage('uid')).value;
+  }
 
 
 
-  async register(email:string,password:string){
+  async register(formValue){
     try {
-      const user = await createUserWithEmailAndPassword(this.auth, email, password);
-      const userDocRef = doc(this.firestore, `usuarios/${user.user?.uid}`);
-      await setDoc(userDocRef,{
-        email,
-        password,
-        nombre : '',
-        apellido : '',
-        imageUrl : '',
-        genero : '',
-        edad : '',
-      });
-      return user;
-    } catch (error) {
-      return null;
+      const registeredUser = await this.fireAuth.createUserWithEmailAndPassword(formValue.email, formValue.password);
+
+      const data = {
+        uid: registeredUser.user.uid,
+        email: formValue.email,
+        nombre: formValue.nombre,
+        apellido: formValue.apellido,
+        genero: formValue.genero,
+        edad: formValue.edad,
+        phone: formValue.phone,
+        type: 'user',
+        status: 'active',
+      };
+      const user = await this.adb.collection('usuarios').doc(registeredUser.user.uid).set(data);
+      console.log(user)
+    } catch (e) {
+      throw(e);
+    }
+  }
+
+  async resetPassword(email: string) {
+    try {
+      await this.fireAuth.sendPasswordResetEmail(email);
+    } catch(e) {
+      throw(e);
     }
   }
 
@@ -51,16 +68,28 @@ async deleteUser(){
   }
 }
 
-  async login(email:string,password:string){
+  setUserData(uid) {
+    this.storage.setStorage('uid', uid);
+  }
+
+  async login(email: string, password: string): Promise<any> {
     try {
-      const user = await signInWithEmailAndPassword(this.auth, email, password);
-      return user;
-    } catch (error) {
-      return null;
+      const response = await this.fireAuth.signInWithEmailAndPassword(email, password);
+      console.log(response);
+      if(response.user) {
+        this.setUserData(response.user.uid);
+      }
+    } catch(e) {
+      throw(e);
     }
   }
 
-  logout(){
-    return signOut(this.auth);
+  async logout() {
+    try {
+      await this.fireAuth.signOut();
+      return this.storage.removeStorage('uid');
+    } catch(e) {
+      throw(e);
+    }
   }
 }

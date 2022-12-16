@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { Usuario } from 'src/app/services/usuario';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { ToastController } from '@ionic/angular';
-
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-login',
@@ -15,137 +11,61 @@ import { ToastController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  credentials!: FormGroup;
+  type: boolean = true;
+  isLogin = false;
 
   constructor(
-    private formBuilder:FormBuilder,
-    private auth:AuthService,
-    private alertCtrl: AlertController,
-    private loadingCtrl:LoadingController,
-    private router:Router,
-    private usuarioService: UsuarioService,
-    private toastCtrl: ToastController,
-  ) { }
+    private authService: AuthService, 
+    private router: Router, 
+    private global: GlobalService) { }
 
   ngOnInit() {
-    this.createForm();
+    this.isLoggedIn();
   }
 
-  get email(){
-    return this.credentials?.get('email');
-  }
-
-  get password(){
-    return this.credentials?.get('password');
-  }
-
-  createForm(){
-    this.credentials = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
-
-  async login(){
-    const loading = await this.loadingCtrl.create();
-    await loading.present();
-    const user = await this.auth.login(this.credentials.value.email,this.credentials.value.password);
-    await loading.dismiss();
-
-    if(user){
-      this.router.navigateByUrl('/home',{replaceUrl:true});
-    }
-    else{
-      this.alertPresent('Ingreso Fallido','Por favor, intente otra vez!!');
+  async isLoggedIn() {
+    try {
+      this.global.showLoader();
+      const val = await this.authService.getId();
+      console.log(val);
+      if(val) this.navigate();
+      this.global.hideLoader();
+    } catch(e) {
+      console.log(e);
+      this.global.hideLoader();
     }
   }
 
-  async register(){
-    const loading = await this.loadingCtrl.create();
-    await loading.present();
-    const user = await this.auth.register(this.credentials.value.email,this.credentials.value.password);
-    await loading.dismiss();
-
-    if(user){
-      this.alertPresent('Usuario Creado!','Por favor presione "ok" parar continuar y rellene sus datos de su perfil a su conveniencia.');
-      this.router.navigateByUrl('/home',{replaceUrl:true});
-    }
-    else{
-      this.alertPresent('Registro Fallido','Por favor, intente otra vez!!');
-    }
+  changeType() {
+    this.type = !this.type;
   }
 
-  async addUsuario(){
-    const alert = await this.alertCtrl.create({
-      header:'Agregar Usuario',
-      inputs: [
-        {
-          name:'nombre',
-          type:'text',
-          placeholder:'Nombre'
-        },
-        {
-          name:'apellido',
-          type:'text',
-          placeholder:'Apellido'
-        },
-        {
-          name:'genero',
-          type:'text',
-          placeholder:'Genero'
-        },
-        {
-          name:'edad',
-          type:'number',
-          placeholder:'Edad'
-        },
-        {
-          name:'email',
-          type:'email',
-          placeholder:'correo@correo.cl'
-        },
-        {
-          name:'password',
-          type:'password',
-          placeholder:'Contraseña'
-        },
-      ],
-      buttons: [
-        {
-          text:'Cancel',
-          role:'cancel'
-        },
-        {
-          text:'Save',
-          role:'confirm',
-          handler:(data) => {
-            const user = this.auth.register(this.credentials.value.email,this.credentials.value.password);
-            this.usuarioService.addUsuario(data);
-
-            this.toastPresent('User added!!!');
-          }
-        }
-      ]
-    });
-    alert.present();
+  onSubmit(form: NgForm) {
+    console.log(form);
+    if(!form.valid) return;
+    this.login(form);
   }
 
-  async toastPresent(message:string){
-    const toast = await this.toastCtrl.create({
-      message:message,
-      duration:1000
+  login(form) {
+    this.isLogin = true;
+    this.authService.login(form.value.email, form.value.password).then(data => {
+      console.log(data);
+      this.navigate();
+      this.isLogin = false;
+      form.reset();
+    })
+    .catch(e => {
+      console.log(e);
+      this.isLogin = false;
+      let msg: string = 'No se pudo iniciar sesión, por favor intente de nuevo';
+      if(e.code == 'auth/user-not-found') msg = 'El correo electrónico no está registrado';
+      else if(e.code == 'auth/wrong-password') msg = 'Por favor, ingrese la contraseña correcta';
+      this.global.showAlert(msg);
     });
-    toast.present();
   }
 
-
-  async alertPresent(header:string,message:string){
-    const alert = await this.alertCtrl.create({
-      header:header,
-      message:message,
-      buttons:['OK'],
-    });
-    await alert.present();
+  navigate() {
+    this.router.navigateByUrl('/home');
   }
 
 }
