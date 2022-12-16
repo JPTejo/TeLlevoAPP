@@ -10,6 +10,7 @@ import { SplashScreenComponent } from './components/splash-screen/splash-screen.
 export class AppComponent {
   public appPages = [
     { title: 'Buscar Viaje', redirectTo: '/home', icon: 'paper-plane'},
+    { title: 'Nuevo Viaje', redirectTo: '/nuevo-viaje', icon: 'paper-plane'},
     { title: 'Mis Viajes', redirectTo: '/mis-viajes', icon: 'analytics' },
     { title: 'Favoritos', redirectTo: '/favoritos', icon: 'heart' },
     { title: 'Amigos', redirectTo: '/amigos', icon: 'person' },
