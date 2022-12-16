@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 
 @Component({
   selector: 'app-nuevo-viaje',
@@ -22,10 +23,23 @@ export class NuevoViajePage implements OnInit {
   pageTitle = 'Nuevo Viaje';
   isNotHome = true;
   
-  constructor() { }
+  constructor(private geolocation: Geolocation) { }
 
   ngOnInit() {
+    this.location();
+  }
 
+  location(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      
+      this.center = {
+        lat: resp.coords.latitude,
+        lng: resp.coords.longitude,
+      }
+      console.log(this.center);
+     }).catch((error) => {
+       console.log('Error obteniendo la ubicacion', error);
+     });
   }
 
   ionViewDidEnter(){
@@ -66,5 +80,5 @@ export class NuevoViajePage implements OnInit {
       console.log(marker);
     })
   }
-
+  
 }
