@@ -9,7 +9,11 @@ import { NuevoViajePageRoutingModule } from './nuevo-viaje-routing.module';
 import { NuevoViajePage } from './nuevo-viaje.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,
