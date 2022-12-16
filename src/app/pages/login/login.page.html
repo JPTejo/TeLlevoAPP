@@ -1,35 +1,80 @@
-<ion-header>
-    <ion-toolbar color="secondary">
-      <ion-title class="ion-text-capitalize">{{pageTitle}}</ion-title>
-      <ion-card-title style="color: white;" class="ion-text-center">
-        Accede a la Aplicación!
-    </ion-card-title>
-    </ion-toolbar>
-  </ion-header>
-
 <ion-content>
 
-    <form (ngSubmit)="login()" [formGroup]="credentials">
+<ion-avatar>
+  <ion-img lines="none "src="assets/icon/tellevo.png"></ion-img>
+</ion-avatar>
 
-        <ion-item class="ion-margin-bottom">
-          <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
-          <ion-note slot="error" *ngIf="(email?.dirty || email?.touched) && email?.errors">Formato email no válido.</ion-note>
-        </ion-item>
-    
-        <ion-item class="ion-margin-bottom">
-          <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-          <ion-note slot="error" *ngIf="(password?.dirty || password?.touched) && password?.errors">El password debe contener al menos 6 caracteres.</ion-note>
-        </ion-item>
-        
-        <ion-button expand="full" type="submit" [disabled]="!credentials.valid">Login</ion-button>
-        <ion-button expand="full" type="button" (click)="register()">Crear cuenta</ion-button>
 
-   
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="ion-text-bottom">
+    <ion-list lines="none">
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="mail" slot="start" color="primary"></ion-icon>
+        <ion-input
+          type="email"
+          name="email"
+          ngModel
+          email
+          #emailCtrl="ngModel"
+          placeholder="Correo"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched" class="ion-text-center">
+        <p class="errorMsg">
+          * Por favor ingrese un correo valido.
+        </p>
+      </ion-text>
 
+
+      <ion-item color="light">
+        <ion-icon name="key" slot="start" color="primary"></ion-icon> 
+        <ion-icon color="primary" slot="end" (click)="changeType()" [name]="type ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+        <ion-input
+          [type]="type ? 'password' : 'text'"
+          name="password"
+          ngModel
+          #passwordCtrl="ngModel"
+          placeholder="Password"
+          required
+          minlength="8">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" class="ion-text-center">
+        <p class="errorMsg">
+          * Contraseña debe ser de 8 caracteres minimo.
+        </p>
+      </ion-text>
+
+    </ion-list>
+
+    <p class="ion-text-right" routerLink="/forgot-password">Olvido Contraseña?</p>
+
+    <ion-button
+      *ngIf="!isLogin"
+      [disabled]="!f.valid"
+      expand="block"
+      shape="round"
+      type="submit"
+      color="primary">
+      Ingreso
+    </ion-button>
     
-      </form>
-    
-  <!--         <ion-button color="success" (click)="addUsuario()">
-            <ion-icon name="add"></ion-icon>
-          </ion-button>-->
+    <div class="ion-text-center" *ngIf="isLogin">
+      <ion-button
+      shape="round" color="primary" [disabled]="!f.valid">
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-button>
+    </div>
+
+  </form>
+
+  <ion-text color="primary" class="ion-text-center" routerLink="/signup">
+  <p class="ion-margin-top">
+    No tienes una cuenta?
+    <b>Registrate</b>
+  </p>
+  </ion-text>
+
 </ion-content>
+
+
