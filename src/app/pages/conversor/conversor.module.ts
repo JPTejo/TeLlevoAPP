@@ -9,6 +9,8 @@ import { ConversorPageRoutingModule } from './conversor-routing.module';
 import { ConversorPage } from './conversor.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     ConversorPageRoutingModule,
     ComponentsModule,
+    HttpClientModule,
   ],
   declarations: [ConversorPage]
 })
