@@ -6,6 +6,9 @@ export const environment = {
   production: false,
   openWeather_KEY: "0d47a689579a1f4d2dae437bc0e0263e",
   openWeather_URL: "https://api.openweathermap.org/data/3.0",
+  currencyData_KEY: "u4YiZV171NsczguZ71fSmtMigqQK5iNo",
+  currencyData_URL: "https://api.apilayer.com/currency_data",
+  google_maps_api_KEY: "AIzaSyASFsWSjM3b0X76aYBa85oT66OikoMl8YE",
   firebase: {
     projectId: 'tellevoapp-b2af6',
     appId: '1:60202765654:web:14ecf882d33de0d7d59af7',

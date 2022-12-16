@@ -23,12 +23,16 @@ import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { AuthGuard } from '@angular/fire/auth-guard';
 import { AuthService } from './services/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    ReactiveFormsModule,
 
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -58,6 +62,8 @@ import { AuthService } from './services/auth.service';
     UserTrackingService,
     AuthGuard,
     AuthService,
+    EmailComposer,
+    
   ],
   bootstrap: [AppComponent],
 })

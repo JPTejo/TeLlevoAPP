@@ -4,22 +4,23 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ConversorPageRoutingModule } from './conversor-routing.module';
+import { NuevoViajePageRoutingModule } from './nuevo-viaje-routing.module';
 
-import { ConversorPage } from './conversor.page';
+import { NuevoViajePage } from './nuevo-viaje.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
-import { HttpClientModule } from '@angular/common/http';
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConversorPageRoutingModule,
+    NuevoViajePageRoutingModule,
     ComponentsModule,
-    HttpClientModule,
   ],
-  declarations: [ConversorPage]
+  declarations: [NuevoViajePage]
 })
-export class ConversorPageModule {}
+export class NuevoViajePageModule {}
