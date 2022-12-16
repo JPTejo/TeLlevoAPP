@@ -1,4 +1,10 @@
 
+Profesor: Christian Sarmiento
+
+Integrantes:
+- Juan Pablo Tejo
+- Benjamin Zuñiga
+- Bastián Rodríguez
 CHANGELOG:
 cambios en app.module.ts
 cambios en contact.page.ts

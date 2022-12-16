@@ -23,8 +23,13 @@ import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { AuthGuard } from '@angular/fire/auth-guard';
 import { AuthService } from './services/auth.service';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+
 
 
 @NgModule({
@@ -32,7 +37,11 @@ import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+
 
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),

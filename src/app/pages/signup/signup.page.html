@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form #f1="ngForm" (ngSubmit)="onSubmit(f1)">
+    <ion-list lines="none">
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="person" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="text"
+          name="nombre"
+          ngModel
+          #name="ngModel"
+          placeholder="Nombres"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!name.valid && name.touched">
+        <p class="errorMsg">* Por favor ingrese su nombre</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="people" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="text"
+          name="apellido"
+          ngModel
+          #apellido="ngModel"
+          placeholder="Apellidos"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!apellido.valid && apellido.touched">
+        <p class="errorMsg">* Por favor ingrese su apellido</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="mail" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="email"
+          name="email"
+          ngModel
+          email
+          #emailCtrl="ngModel"
+          placeholder="Correo"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+        <p class="errorMsg">* Por favor ingrese un correo valido</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="call" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="tel"
+          name="phone"
+          ngModel
+          #phone="ngModel"
+          placeholder="Telefono"
+          required
+          minlength="9"
+          maxlength="9">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!phone.valid && phone.touched">
+        <p class="errorMsg">* Por favor ingrese un telefono de 9 digitos</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="transgender" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="text"
+          name="genero"
+          ngModel
+          #genero="ngModel"
+          placeholder="Genero">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!genero.valid && genero.touched">
+        <p class="errorMsg">* Por favor ingrese su genero</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="calendar" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="tel"
+          name="edad"
+          ngModel
+          #age="ngModel"
+          placeholder="Edad"
+          minlength="1"
+          maxlength="3">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!age.valid && age.touched">
+        <p class="errorMsg">* Por favor ingrese su edad</p>
+      </ion-text>
+
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="key" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="password"
+          name="password"
+          ngModel
+          #passwordCtrl="ngModel"
+          placeholder="Contraseña"
+          required
+          minlength="8">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" class="ion-text-center">
+        <p class="errorMsg">* La contraseña debe tener 8 caracteres.</p>
+      </ion-text>
+
+      <ion-item color="light">
+        <ion-icon name="arrow-redo" slot="start" color="primary"></ion-icon> 
+        <ion-input
+          type="password"
+          name="c_password"
+          ngModel
+          #c_passwordCtrl="ngModel"
+          placeholder="Confirmar Contraseña"
+          required
+          minlength="8">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!c_passwordCtrl.valid && c_passwordCtrl.touched">
+        <p class="errorMsg">* La contraseña debe tener 8 caracteres.</p>
+      </ion-text>
+      <ion-text color="danger" *ngIf="c_passwordCtrl.valid && c_passwordCtrl.value != passwordCtrl.value">
+        <p class="errorMsg">* Ha ingresado contraseñas distintas.</p>
+      </ion-text>
+    </ion-list>
+
+    <ion-button 
+      *ngIf="!isLoading" 
+      [disabled]="!f1.valid || (c_passwordCtrl.value != passwordCtrl.value)"
+      expand="block" 
+      shape="round" 
+      type="submit" 
+      color="primary">
+      REGISTRARSE
+    </ion-button>
+
+    <div class="ion-text-center" *ngIf="isLoading">
+      <ion-button 
+        shape="round" 
+        color="primary" 
+        [disabled]="!f1.valid || (c_passwordCtrl.value != passwordCtrl.value)">
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-button>
+    </div>
+    
+  </form>
+
+</ion-content>
+
+
