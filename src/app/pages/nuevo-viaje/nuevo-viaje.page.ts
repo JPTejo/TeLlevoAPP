@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { GoogleMap } from '@capacitor/google-maps';
+import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class NuevoViajePage implements OnInit {
 
   @ViewChild('map')
-  mapRef: ElementRef<HTMLElement>;
+  mapRef: ElementRef;
   newMap: GoogleMap;
 
   center: any = {
@@ -28,7 +28,7 @@ export class NuevoViajePage implements OnInit {
 
   }
 
-  ngAfterViewInit(){
+  ionViewDidEnter(){
     this.createMap();
   }
 
@@ -37,11 +37,34 @@ export class NuevoViajePage implements OnInit {
       id: 'capacitor-google-maps',
       element: this.mapRef.nativeElement,
       apiKey: environment.google_maps_api_KEY,
+      forceCreate: true,
       config: {
         center: this.center,
         zoom: 13,
       },
     });
+    this.addMarkers();
+  }
+
+  async addMarkers(){
+    const markers: Marker [] = [
+      {
+        coordinate: this.center,
+        title: 'localhost',
+        snippet: 'Best place on earth'
+      },
+      {
+        coordinate: this.center,
+        title: 'random place',
+        snippet: 'not sure',
+      },
+    ];
+
+    await this.newMap.addMarkers(markers);
+
+    this.newMap.setOnMarkerClickListener(async (marker) => {
+      console.log(marker);
+    })
   }
 
 }
