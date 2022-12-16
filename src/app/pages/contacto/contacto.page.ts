@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { EmailComposer, EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
 
 @Component({
   selector: 'app-contacto',
@@ -9,9 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ContactoPage implements OnInit {
 
+  hasAccount:any;
   
   pageTitle = 'contacto';
   isNotHome = true;
+  priority: any;
+  formData: FormGroup<{ title: FormControl<any>; }>;
+  route: any;
 
   constructor(private emailComposer: EmailComposer) { }
 

@@ -14,7 +14,7 @@ export class FabMenuComponent implements OnInit {
   ngOnInit() {}
 
   goContact(){
-    this.router.navigate(['/contact']);
+    this.router.navigate(['/contacto']);
   }
 
   goNewsByUrl(){
