@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,6 +12,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
 
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HomePageRoutingModule } from '../home/home-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -18,8 +21,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    NuevoViajePageRoutingModule,
-    ComponentsModule,
+    HomePageRoutingModule,
+    ComponentsModule, 
+    HttpClientModule,
   ],
   declarations: [NuevoViajePage]
 })

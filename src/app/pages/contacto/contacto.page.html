@@ -1,13 +1,13 @@
 <app-header [pageTitle]="pageTitle" [isNotHome]="isNotHome"></app-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
     <ion-card color="danger">
       <ion-card-header>
         <ion-card-title>Contactenos</ion-card-title>
       </ion-card-header>
     
-    <form [formGroup]="formData" (ngSubmit)="onSubmit()">
       <ion-card-content>
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()">
         <ion-item>
           <ion-label>Nombre:</ion-label>
           <ion-input formControlname="nombre"></ion-input>
@@ -22,6 +22,6 @@
         </ion-item>
         <ion-button type="submit" expand="block">Enviar</ion-button>
       </form>
-      </ion-card-content>
-    </ion-card>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
